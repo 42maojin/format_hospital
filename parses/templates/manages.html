@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>文件加工厂-文件管理</title>
+  <meta name="renderer" content="webkit">
+    <link rel="shortcut icon" href="{% static 'images/pict.png' %}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="{% static 'js/layui/css/layui.css' %}"  media="all">
+    <link rel="stylesheet" href="{% static 'js/bootstrop/css/bootstrap.css' %}" media="all">
+</head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'index' %}">文件加工厂</a>
+            </div>
+            <div style="height:50px;position: relative;">
+                <ul  class="nav navbar-nav" style="position: absolute;left: 50%;transform: translate(-50%)">
+                    <li ><a href="{% url 'index' %}">首页</a></li>
+                    <li class="active"><a href="{% url 'manages' %}">文件管理</a></li>
+                    <li><a href="{% url 'add_account' %}">添加账号</a></li>
+                </ul>
+            </div>
+        </div>
+</nav>
+<div style="width: 1200px; margin: 0 auto">
+
+   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px">
+      <legend>文件管理</legend>
+    </fieldset>
+      <table class="layui-table">
+        <colgroup>
+          <col width="200">
+          <col width="400">
+          <col>
+        </colgroup>
+        <thead>
+          <tr class="layui-bg-red">
+            <th style="text-align: center">ID</th>
+            <th style="text-align: center">文件名</th>
+              <th style="text-align: center">上传时间</th>
+              <th style="text-align: center">删除</th>
+
+
+{#            <th>邮箱地址</th>#}
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for contact in contacts %}
+        <tr>
+            <td style="text-align: center">{{ contact.id }}</td>
+            <td>{{ contact.files_name }}</td>
+            <td>{{ contact.create_time }}</td>
+
+              <td style="text-align: center"><a href="/parses/delete_info/{{ contact.id }}" class="layui-btn layui-btn-danger">
+                      删除
+                    </a></td>
+{#            <td>{{ contact.sex }}</td>#}
+{#            <td>{{ contact.experience }}</td>#}
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <button class="layui-btn">
+                <a href="?page=1">第一页</a>
+            </button>
+
+            <button class="layui-btn">
+                <a href="?page={{ contacts.previous_page_number }}"><i class="layui-icon">&#xe65a;</i></a>
+            </button>
+        {% endif %}
+
+        <span class="current">
+            <button class="layui-btn">
+                第 {{ contacts.number }}页  共 {{ contacts.paginator.num_pages }}页
+            </button>
+        </span>
+
+        {% if contacts.has_next %}
+            <button class="layui-btn">
+                <a href="?page={{ contacts.next_page_number }}"><i class="layui-icon">&#xe65b;</i></a>
+            </button>
+
+            <button class="layui-btn">
+                <a href="?page={{ contacts.paginator.num_pages }}">最后一页</a>
+            </button>
+        {% endif %}
+    </span>
+</div>
+</div>
+<script src="{% static 'js/layui/layui.js' %}" charset="utf-8"></script>
+<script src="{% static 'js/js/bootstrap.js' %}"></script>
+</body>
+</html>

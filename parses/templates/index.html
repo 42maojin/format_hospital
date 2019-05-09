@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件加工厂-首页</title>
+    <link rel="shortcut icon" href="{% static 'images/pict.png' %}">
+    <link rel="stylesheet" href="{% static 'js/laydate/theme/default/laydate.css' %}" media="all">
+    <link rel="stylesheet" href="{% static 'js/layui/css/layui.css' %}" media="all">
+    <link rel="stylesheet" href="{% static 'js/bootstrop/css/bootstrap.css' %}" media="all">
+    <style>
+
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .demo-input {
+            padding-left: 10px;
+            height: 38px;
+            min-width: 262px;
+            line-height: 38px;
+            border: 1px solid #e6e6e6;
+            background-color: #fff;
+            border-radius: 2px;
+        }
+
+        .demo-input-1 {
+            padding-left: 10px;
+            height: 38px;
+            min-width: 274px;
+            line-height: 38px;
+            border: 1px solid #e6e6e6;
+            background-color: #fff;
+            border-radius: 2px;
+        }
+
+        .demo-footer {
+            padding: 50px 0;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .demo-footer a {
+            padding: 0 5px;
+            color: #01AAED;
+        }
+
+        .demo-box {
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .textbox {
+            width: 600px;
+            padding-left: 10px;
+            padding-top: 10px;
+            font-size: 14px;
+            padding-right: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        .textbox tr th {
+            height: 40px;
+        }
+
+        .tbody-box {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .read-more {
+            padding-left: 10px;
+            height: 38px;
+            min-width: 274px;
+            line-height: 38px;
+            border: 1px solid #e6e6e6;
+            background-color: #fff;
+            border-radius: 2px;
+            text-align: center;
+        }
+
+        .label1 {
+            position: relative;
+            width: 554px;
+        }
+
+        .fileinp {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        .text-c {
+            color: red;
+        }
+
+        .btn-text {
+            padding: 5px 10px;
+            color: #888;
+            background: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .btn-text:hover {
+            color: #444;
+            background: #eee;
+            border-color: #ccc;
+            text-decoration: none;
+        }
+
+        .dygq {
+            position: absolute;
+            left: 580px;
+            top: 20px;
+        }
+
+        .pr-box-c {
+            position: relative;
+        }
+
+        .pa-oxc {
+            position: absolute;
+            left: 560px;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'index' %}">文件加工厂</a>
+            </div>
+            <div style="height:50px;position: relative;">
+                <ul  class="nav navbar-nav" style="position: absolute;left: 50%;transform: translate(-50%)">
+                    <li class="active"><a href="{% url 'index' %}">首页</a></li>
+                    <li ><a href="{% url 'manages' %}">文件管理</a></li>
+                    <li><a href="{% url 'add_account' %}">添加账号</a></li>
+                </ul>
+            </div>
+        </div>
+</nav>
+<div class="col-md-3 col-md-offset-9">
+        <div class="list-group">
+            <a href="/static/商务通文件模板.xls" class="list-group-item" style="text-align: center">商务通模板下载</a>
+            <a href="/static/消费表文件模板.csv" class="list-group-item" style="text-align: center">消费表模板下载</a>
+        </div>
+    </div>
+<div style="padding: 0 20px">
+    <form class="layui-form" action="#" method="post" style="margin-top:50px" id>
+        <div class="layui-upload">
+            <button type="button" class="layui-btn layui-btn-normal" id="testList">选择多文件</button>
+            <div class="layui-upload-list">
+                <table class="layui-table">
+                    <thead>
+                        <tr>
+                            <th>文件名称</th>
+                            <th>大小</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="demoList">
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+            <!-- <input type="hidden" name="sid" value="{$_GET['id']}" /> -->
+            <!-- <input class="layui-btn" type="submit" value="提交"></button> -->
+        </div>
+    </form>
+<div class="pr-box-c">
+    <form method="post">
+        <div class="demo-box">
+            <input type="text" class="demo-input test1" placeholder="选择查询日期" id="test2" name="Date">
+        </div>
+
+        <div class="demo-box">
+            <input type="submit" class="demo-input-1" value="查询周期" name="inquire" onclick="return check_select()">
+
+        </div>
+    </form>
+    <div class="pa-oxc">
+        <form method="post" enctype="multipart/form-data" action="{% url 'download_file' %}"
+              class="table table-bordered form-horizontal">
+            <input type="submit" class="demo-input-1" value="下载"/>
+        </form>
+    </div>
+</div>
+
+
+<div id="container">
+    <div class="tbody-box" id="wrap">
+        <table class="layui-table">
+            <colgroup>
+                <col width="150">
+                <col width="200">
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th>远大项目</th>
+                <th>着陆页</th>
+                <th>消费</th>
+                <th>展现量</th>
+                <th>点击量</th>
+                <th>毛咨询</th>
+                <th>有效对话</th>
+                <th>五句</th>
+                <th>毛/点</th>
+                <th>有效点击比</th>
+                <th>对话成本</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for value in info %}
+                <tr>
+                    <td>{{ value.0 }}</td>
+                    <td>{{ value.1 }}</td>
+                    <td>{{ value.2 }}</td>
+                    <td>{{ value.3 }}</td>
+                    <td>{{ value.4 }}</td>
+                    <td>{{ value.5 }}</td>
+                    <td>{{ value.6 }}</td>
+                    <td>{{ value.7 }}</td>
+                    <td>{{ value.8 }}</td>
+                    <td>{{ value.9 }}</td>
+                    <td>{{ value.10 }}</td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+        <div id="gradient"></div>
+    </div>
+</div>
+<div id="read-more" class="read-more"></div>
+</div>
+
+
+<script src="{% static 'js/jquery-1.8.2.js' %}"></script>
+<script src="{% static 'js/laydate/laydate.js' %}"></script>
+<script src="{% static 'js/layui/layui.js' %}"></script>
+<script src="{% static 'js/js/bootstrap.js' %}"></script>
+<script>
+    lay('.test1').each(function () {
+        laydate.render({
+            elem: this
+            , trigger: 'click'
+            , theme: 'grid'
+            , range: true
+        });
+    });
+</script>
+
+{#判断是否选择了上传文件#}
+<script type="text/javascript">
+    function checkNull() {
+        var num = 0;
+        var str = "";
+        $("input[type$='file']").each(function (n) {
+            if ($(this).val() == "") {
+                num++;
+                str += "" + "请上传" + $(this).attr("msg") + "文件！\r\n";
+            }
+        });
+        if (num > 0) {
+            alert(str);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+</script>
+
+{#判断是否选择了查询日期#}
+<script type="text/javascript">
+    function check_select() {
+        var num = 0;
+        var str = "";
+        $("input[type$='text']").each(function (n) {
+            if ($(this).val() == "") {
+                num++;
+                str += "" + "请选择查询日期";
+            }
+        });
+        if (num > 0) {
+            alert(str);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+</script>
+
+{# 查看更多数据 #}
+<script type="text/javascript">
+    $(function () {
+        var slideHeight = 560; // px
+        var defHeight = $('#wrap').height();
+        if (defHeight >= slideHeight) {
+
+            $('#wrap').css('height', slideHeight + 'px');
+
+            $('#read-more').append('<a href=" ">查看更多</a>');
+
+            $('#read-more a').click(function () {
+
+                var curHeight = $('#wrap').height();
+
+                if (curHeight == slideHeight) {
+
+                    $('#wrap').animate({
+
+                        height: defHeight
+
+                    }, "normal");
+
+                    $('#read-more a').html('点击隐藏');
+
+                    $('#gradient').fadeOut();
+
+                } else {
+
+                    $('#wrap').animate({
+
+                        height: slideHeight
+
+                    }, "normal");
+
+                    $('#read-more a').html('点击查看更多');
+
+                    $('#gradient').fadeIn();
+
+                }
+
+                return false;
+
+            });
+        }
+    });
+
+    $("#fileinp").change(function () {
+        $("#text").html($("#fileinp").val());
+    });
+    $("#fileinp2").change(function () {
+        $("#text2").html($("#fileinp2").val());
+    })
+</script>
+<script src="{% static 'js/layui-v2.4.5/layui/layui.js' %}"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script>
+    layui.use('upload', function () {
+        var $ = layui.jquery;
+        var upload = layui.upload;
+        console.log(upload);
+        //执行实例
+
+        //多文件列表示例
+        var demoListView = $('#demoList'),
+            uploadListIns = upload.render({
+                elem: '#testList',
+                url: '/parses/',
+                accept: 'file',
+                multiple: true,
+                auto: false,
+                bindAction: '#testListAction',
+                choose: function (obj) {
+                    var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                    //读取本地文件
+                    obj.preview(function (index, file, result) {
+                        // console.log(file.name);
+
+                        var tr = $(['<tr id="upload-' + index + '">', '<td>' + file.name +
+                            '</td>', '<td>' + (file
+                                .size / 1014).toFixed(1) + 'kb</td>', '<td>等待上传</td>',
+                            '<td>'
+                            // ,'<button class="layui-btn layui-btn-mini demo-reload layui-hide">重传</button>'
+                            ,
+                            '<button class="layui-btn layui-btn-mini layui-btn-danger demo-delete">删除</button>',
+                            '</td>', '</tr>'
+                        ].join(''));
+                        //单个重传
+                        tr.find('.demo-reload').on('click', function () {
+                            obj.upload(index, file);
+                        });
+                        //删除
+                        tr.find('.demo-delete').on('click', function () {
+                            delete files[index]; //删除对应的文件
+                            tr.remove();
+                            uploadListIns.config.elem.next()[0].value =
+                                ''; //清空 input file 值，以免删除后出现同名文件不可选
+                        });
+
+                        demoListView.append(tr);
+                    });
+                },
+                done: function (res, index, upload) {
+                    // console.log(index);
+                    // console.log(res.name);
+
+                    if (res.name != '') {
+                        // const ids = 'upload-' + index
+                        // var tr = $(`#${ids}`)
+                        // console.log(tr);
+                        var tr = demoListView.find('tr#upload-'+ index);
+                        tds = tr.children();
+                        tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
+                        tds.eq(3).html(''); //清空操作
+                        return delete this.files[index]; //删除文件队列已经上传成功的文件
+                        // var tr = demoListView.find('upload-' + index);
+
+                        // tds = tr.children();
+
+                        // tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
+                        // console.log(tds.eq(2).html());
+
+                        // tds.eq(3).html(''); //清空操作
+                        // var str = '<input type="hidden" name="photo[]" value=' + res.name + '>';
+                        // $('.layui-upload').append(str);
+                        // console.log(this.files[index]);
+
+                        return delete this.files[index]; //删除文件队列已经上传成功的文件
+                    }
+                    this.error(index, upload);
+                },
+                error: function (index, upload) {
+                    var tr = demoListView.find('tr#upload-' + index),
+                        tds = tr.children();
+                    tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+                    tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+                }
+            });
+    });
+</script>
+</body>
+</html>

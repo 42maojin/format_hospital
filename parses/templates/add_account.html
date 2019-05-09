@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{% static 'images/pict.png' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'js/bootstrop/css/bootstrap.css' %}">
+    <title>文件加工厂-增加账号</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'index' %}">文件加工厂</a>
+            </div>
+            <div style="height:50px;position: relative;">
+                <ul  class="nav navbar-nav" style="position: absolute;left: 50%;transform: translate(-50%)">
+                    <li ><a href="{% url 'index' %}">首页</a></li>
+                    <li ><a href="{% url 'manages' %}">文件管理</a></li>
+                    <li class="active"><a href="{% url 'add_account' %}">添加账号</a></li>
+                </ul>
+            </div>
+        </div>
+</nav>
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h3>GC账号</h3>
+        <table class="table table-bordered">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <th style="text-align:center">ID</th>
+                    <th style="text-align:center">文件名</th>
+                    <th style="text-align:center">删除账号</th>
+                </tr>
+            </thead>
+            <tbody id="tbody1">
+            {% for foo in account_gc %}
+
+
+                <tr style="text-align:center">
+                    <td>{{ foo.id }}</td>
+                    <td>{{ foo.account_name }}</td>
+                    <td><a href="/parses/del_account_gc/{{ foo.id }}" class="layui-btn layui-btn-danger">
+                      删除
+                    </a></td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-6">
+            <form role="form" action="{% url 'add_account' %}" method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" id="ipt1" name="name1" class="form-control" placeholder="添加肛肠科账号">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" id="btn1" type="submit">
+                                确认添加 !
+                            </button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+            </form>
+        </div><!-- /.col-lg-6 -->
+    </div>
+
+
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h3>WC账号</h3>
+        <table class="table table-bordered">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <th style="text-align:center">ID</th>
+                    <th style="text-align:center">文件名</th>
+                    <th style="text-align:center">删除账号</th>
+                </tr>
+            </thead>
+            <tbody id="tbody2">
+            {% for foo in account_wc %}
+
+                <tr style="text-align:center">
+                    <td>{{ foo.id }}</td>
+                    <td>{{ foo.account_name }}</td>
+                    <td><a href="/parses/del_account_wc/{{ foo.id }}" class="layui-btn layui-btn-danger">
+                      删除
+                    </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-4 col-md-offset-6">
+        <form role="form" action="{% url 'add_account' %}" method="post">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" id="ipt2" name="name2" class="form-control" placeholder="添加胃肠科账号">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" id="btn2" type="submit">
+                            确认添加 !
+                        </button>
+                    </span>
+                </div><!-- /input-group -->
+            </div>
+        </form>
+    </div><!-- /.col-lg-6 -->
+</body>
+
+</html>
