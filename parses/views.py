@@ -20,7 +20,8 @@ def readFile(filename, chunk_size=512):
 
 
 def talk_type(var):
-    if var == '客人无讯息':
+
+    if var == '客人无讯息' or var=='客服未接受' or var=='客服无讯息':
         var = 0
         return var
     else:
@@ -53,19 +54,19 @@ def fives(a, b):
 # 初次清理着陆页 = 肛肠
 def regex(urls):
     url = str(urls)
-    if '//ada.baidu' and 'imid=' and 'utm_source=' and "&utm_source" and "&bd_vid" in url:
-        if len(re.findall(
-                "(https://ada\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+&utm_source=[0-9a-z]+&\d+).*?",
-                url)) >= 1:
-            data = re.findall(
-                "(https://ada\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+)&utm_source=[0-9a-z]+&\d+.*?",
-                url)
+    if '//ada.baidu' and 'imid=' and 'source' in url:
+        if len(re.findall("(https://ada\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+&[a-z_]+=[0-9a-z]+&.*?).*?",url)) >= 1:
+            data = re.findall("(https://ada\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+)&[a-z_]+=([0-9a-z]+).*?",url)
             return data[0]
         else:
             return None
     else:
         return None
 
+def regex1(var):
+    if var is not None:
+        if len(var) >= 2:
+            return var[0]
 
 # 初次清理着陆页 = 胃肠
 def regex_wc(urls):
@@ -89,14 +90,27 @@ def regex_wc(urls):
 
 def regex_url(url):
     if len(re.findall(
-            "(https://ada\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+)&utm_source=[0-9a-z]+&\d+",
+            "(https://ada\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+)&[a-z_]+=[0-9a-z]+&.*",
             url)) >= 1:
         data = re.findall(
-            "(https://ada\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+)&utm_source=[0-9a-z]+&\d+",
+            "(https://ada\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+)&[a-z_]+=[0-9a-z]+.*",
             url)
         return data[0]
 
-
+def account_gc(var):
+    if var is not None:
+        # print(var)
+        if len(var)>=2:
+            # print(type(var))
+            return var[1]
+def name_gc(var):
+    if var is not None:
+        gc =models.ACCOUNT_GC.objects.filter(account_id=var).first().account_name
+        return gc
+def name_wc(var):
+    if var is not None:
+        wc =models.ACCOUNT_WC.objects.filter(account_id=var).first().account_name
+        return wc
 def regex_url_wc(urls):
     if len(re.findall(
             "(https://ada\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+)&[a-z_]+=[0-9a-z]+&\d+",
@@ -137,49 +151,43 @@ def statistics(var):
 
 # 额外的
 
-def regex_extra(urls):
-    url = str(urls)
-    if 'baidu' and 'imid=' and "source" and "&bd_vid" in url:
-        if len(re.findall(
-                "(https://[a-z]+\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+&[a-z_]+=[0-9a-z]+&\d+).*?",
-                url)) >= 1:
-            # data = re.findall("(https://[a-z]+\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+)&[a-z_]+=[0-9a-z]+&\d+.*?",url)
-            return None
-        else:
-            return 1
-    else:
-        if "baidu" in url:
-            return 1
-        else:
-            return None
+# def regex_extra(urls):
+#     # if 'baidu' and 'imid=' in url:
+#     url=str(urls)
+#                     # "https://ada.baidu.com/site/ydgcw120.com/xyl?imid=d87f3ac0eafc494878b4cc62f283f340&word="
+#     if len(re.findall("(https://ada\.baidu\.com/site/[a-z0-9]+\.[net|com]+/xyl\?imid=[a-z0-9]+)&word=", url)) >= 1:
+#
+#         data = re.findall("(https://ada\.baidu\.com/site/[a-z0-9]+\.[net|com]+/xyl\?imid=[a-z0-9]+)&word=", url)
+#
+#         return data[0]
+#     else:
+#         return None
 
+# def regex_extra_wc(urls):
+#     url = str(urls)
+#     if 'baidu' and 'imid=' and "source" and "&bd_vid" in url:
+#         if len(re.findall(
+#                 "(https://[a-z]+\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+&[a-z_]+=[0-9a-z]+&\d+).*?",url)) >= 1:
+#             # data = re.findall("(https://[a-z]+\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+)&[a-z_]+=[0-9a-z]+&\d+.*?",url)
+#             return None
+#         else:
+#             return 1
+#     else:
+#         if "baidu" in url:
+#             return 1
+#         else:
+#             return None
 
-def regex_extra_wc(urls):
-    url = str(urls)
-    if 'baidu' and 'imid=' and "source" and "&bd_vid" in url:
-        if len(re.findall(
-                "(https://[a-z]+\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+&[a-z_]+=[0-9a-z]+&\d+).*?",
-                url)) >= 1:
-            # data = re.findall("(https://[a-z]+\.baidu\.com/site/[0-9a-z]+\.[net|com]+/xyl\?imid=[a-z0-9]+)&[a-z_]+=[0-9a-z]+&\d+.*?",url)
-            return None
-        else:
-            return 1
-    else:
-        if "baidu" in url:
-            return 1
-        else:
-            return None
-
-
-def regex_customer(var):
-    if "推广账户ID" in str(var):
-        data = re.findall("(\d{6,10})", str(var))
-        if len(data) >= 0:
-            return data[0]
-        else:
-            return 0
-    else:
-        return 0
+# def regex_customer(var):
+#     if "推广账户ID" in str(var):
+#         data = re.findall("(\d{6,10})", str(var))
+#         if len(data) >= 0:
+#
+#             return data[0]
+#         else:
+#             return 0
+#     else:
+#         return 0
 
 
 def extra(var):
@@ -189,11 +197,13 @@ def extra(var):
             return x[1]
 
 
-def customer(var, var1):
-    if regex_extra(var) is not None and regex_customer(var1) is not 0:
-        return regex_customer(var1)
-    else:
-        return 0
+# def customer(var, var1):
+#     if regex_extra(var) is not None and regex_customer(var1) is not 0:
+#         print(regex_extra(var),"==",regex_customer(var1))
+#         # print(var)
+#         return var
+#     else:
+#         return 0
 
 
 date_name = "0"  # 全局变量
@@ -663,54 +673,67 @@ def index(request):
             # ====================处理==================================================
             df_kwd = read_frame(k)
             # KWD-着陆页
+
             df1 = df_kwd[["dia_type", "guest_num", "service_num", "first_visit_url"]].copy()
             df1['first_visit_url'] = df1['first_visit_url'].apply(regex)
-            # df1.to_excel("df1.xlsx")
-            df_url = formats(df1).groupby(['first_visit_url'], as_index=False).sum()
-            # df_url.to_excel("df_url.xlsx")
+            df1['account']=df1['first_visit_url'].apply(account_gc).apply(name_gc)
+            df1['first_visit_url'] = df1['first_visit_url'].apply(regex1)
+            df1.to_excel("df1.xlsx")
+            df_url = formats(df1).groupby(['account','first_visit_url'], as_index=False).sum()
+            # df_url = formats(df1)
+            df_url.to_excel("df_url.xlsx")
             df_url_k = df_url.rename(columns={"first_visit_url": "mobile_visit_url"})
 
             # CONSUMPTION - 着陆页
             gc = models.CONSUMPTION_GC.objects.filter(date__range=(date1, date2))
 
-
             df_consumption = read_frame(gc)
             df_url_c = df_consumption[["account", 'mobile_visit_url', 'consumption', 'click_num', 'show']].copy()
             df_url_c["mobile_visit_url"] = df_url_c["mobile_visit_url"].apply(regex_url)
             df_url_c1 = df_url_c.groupby(by=["account", "mobile_visit_url"], as_index=False).sum()
+            df_url_c1.to_excel("df_url_c1.xlsx")
             # 着陆页合并
             url_columns = ["总计", "account", "mobile_visit_url", "consumption", "show", "click_num", "毛咨询", "有效对话", "五句",
                            "毛/点", "有效点击比", "对话成本"]
-            data = pd.merge(df_url_k, df_url_c1, on="mobile_visit_url")
-            # data.to_excel("data.xlsx")
+            data = pd.merge(df_url_k, df_url_c1, on=["mobile_visit_url","account"])
+            '''
+            data.to_excel("data.xlsx")
             # ---------------------------------------------------
             df_extra = df_kwd[["dia_type", "first_visit_url", "guest_desc", "guest_num", "service_num"]].copy()
-            df_extra["account"] = df_extra.apply(lambda x: customer(x.first_visit_url, x.guest_desc), axis=1)
-            df_extra["guest_desc"] = df_extra["guest_desc"].apply(regex_customer)
+            df_extra["组合"] = df_extra.apply(lambda x: customer(x.first_visit_url, x.guest_desc), axis=1)
+            print(df_extra["first_visit_url"])
+            df_extra["account"] = df_extra["first_visit_url"].apply(regex_extra)
+            # print("111",df_extra["first_visit_url"])
+            df_extra.to_excel("abc.xlsx")
+            # df_extra["guest_desc"] = df_extra["guest_desc"].apply(regex_customer)
             # df['初次访问网址'] = df['初次访问网址'].apply(regex_extra)
             df_extra_url = formats(df_extra).groupby(by="account", as_index=False).sum()
-            df_extra_url["account"] = df_extra_url["account"].apply(extra)
-            df_extra_url["consumption"] = 0
-            df_extra_url["mobile_visit_url"] = "空白"
-            df_extra_url["click_num"] = 0
-            df_extra_url["show"] = 0
-
-            extras = pd.concat([data, df_extra_url], sort=True)
+            # df_extra_url["account"] = df_extra_url["account"].apply(extra)
+            # df_extra_url["consumption"] = 0
+            # df_extra_url["mobile_visit_url"] = "空白"
+            # df_extra_url["click_num"] = 0
+            # df_extra_url["show"] = 0
+            #
+            # extras = pd.concat([data, df_extra_url], sort=True)
             # extras.to_excel("extras.xlsx")
             # -----------------------------------------------------------------
-
-            df_pro_url = extras.groupby(by=["account"], as_index=False).sum()
+            '''
+            # df_pro_url = extras.groupby(by=["account"], as_index=False).sum()
+            df_pro_url = data.groupby(by=["account"], as_index=False).sum()
             df_pro_url["总计"] = "总计"
-            url_data = pd.concat([extras, df_pro_url], sort=True)
-            f_url = statistics(url_data).reindex(columns=url_columns).sort_values(by=["account", "consumption"],
-                                                                                  ascending=False)
+            # url_data = pd.concat([extras, df_pro_url], sort=True)
+            url_data = pd.concat([data, df_pro_url], sort=True)
+            f_url = statistics(url_data).reindex(columns=url_columns).sort_values(by=["account", "consumption"],ascending=False)
             # f_url.to_excel("f_url.xlsx")
             # ===================================================================================================================完成的着陆页
             df_P = read_frame(p)
 
             df1_wc = df_P[["dia_type", "guest_num", "service_num", "first_visit_url"]].copy()
-            df1_wc['first_visit_url'] = df1_wc['first_visit_url'].apply(regex_wc)
-            df_url_wc = formats(df1_wc).groupby(['first_visit_url'], as_index=False).sum()
+            df1_wc['first_visit_url'] = df1_wc['first_visit_url'].apply(regex)
+            df1_wc['account'] = df1_wc['first_visit_url'].apply(account_gc).apply(name_wc)
+            df1_wc['first_visit_url'] = df1_wc['first_visit_url'].apply(regex1)
+            df1_wc.to_excel("df1_wc.xlsx")
+            df_url_wc = formats(df1_wc).groupby(['account', 'first_visit_url'], as_index=False).sum()
             df_url_k_wc = df_url_wc.rename(columns={"first_visit_url": "mobile_visit_url"})
 
             # CONSUMPTION - 着陆页
@@ -719,10 +742,13 @@ def index(request):
             df_url_c_wc = df_consumption_wc[["account", 'mobile_visit_url', 'consumption', 'click_num', 'show']].copy()
             df_url_c_wc["mobile_visit_url"] = df_url_c_wc["mobile_visit_url"].apply(regex_url_wc)
             df_url_c1_wc = df_url_c_wc.groupby(by=["account", "mobile_visit_url"], as_index=False).sum()
+
+
             # 着陆页合并
             url_columns = ["总计", "account", "mobile_visit_url", "consumption", "show", "click_num", "毛咨询", "有效对话", "五句",
                            "毛/点", "有效点击比", "对话成本"]
-            data_wc = pd.merge(df_url_k_wc, df_url_c1_wc, on="mobile_visit_url")
+            data_wc = pd.merge(df_url_k_wc, df_url_c1_wc, on=["mobile_visit_url","account"])
+            '''
             # 额外的--------------------------------------------------------------------------------
             df_extra_wc = df_P[["dia_type", "first_visit_url", "guest_desc", "guest_num", "service_num"]].copy()
             df_extra_wc["account"] = df_extra_wc.apply(lambda x: customer(x.first_visit_url, x.guest_desc), axis=1)
@@ -738,10 +764,10 @@ def index(request):
             extras_wc = pd.concat([data_wc, df_extra_wc_url], sort=True)
             # extras_wc.to_excel("extras_wc.xlsx")
             # 额外的--------------------------------------------------------------------------------
-
-            df_pro_url_wc = extras_wc.groupby(by=["account"], as_index=False).sum()
+            '''
+            df_pro_url_wc = data_wc.groupby(by=["account"], as_index=False).sum()
             df_pro_url_wc["总计"] = "总计"
-            url_data_wc = pd.concat([extras_wc, df_pro_url_wc], sort=True)
+            url_data_wc = pd.concat([data_wc, df_pro_url_wc], sort=True)
             f_url_wc = statistics(url_data_wc).reindex(columns=url_columns).sort_values(by=["account", "consumption"],
                                                                                         ascending=False)
             # f_url_wc.to_excel("f_url_wc.xlsx")
@@ -877,15 +903,17 @@ def add_account(request):
         account_wc = models.ACCOUNT_WC.objects.all()
         return render(request,'add_account.html',{"account_gc":account_gc,"account_wc":account_wc})
     elif request.method=="POST":
-        if request.POST.get("name1"):
-            account_gc = request.POST.get("name1")
-            print("account_gc: ",account_gc)
-            models.ACCOUNT_GC.objects.create(account_name=account_gc)
+        if request.POST.get("gc_id"):
+            gc_id = request.POST.get("gc_id")
+            gc_account = request.POST.get("gc_account")
+            print("account_gc: ",gc_id,gc_account)
+            models.ACCOUNT_GC.objects.create(account_id=gc_id,account_name=gc_account)
             return redirect('/parses/add_account')
-        if request.POST.get("name2"):
-            account_wc=request.POST.get("name2")
-            print("account_wc: ",account_wc)
-            models.ACCOUNT_WC.objects.create(account_name=account_wc)
+        if request.POST.get("wc_id"):
+            wc_id=request.POST.get("wc_id")
+            wc_account=request.POST.get("wc_account")
+            # print("account_wc: ",account_wc)
+            models.ACCOUNT_WC.objects.create(account_id=wc_id,account_name=wc_account)
             return redirect('/parses/add_account')
         else:
             return render(request,'404.html')
@@ -912,7 +940,8 @@ def download_file(request):
     response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
     return response
 
-
+def useful(request):
+    return render(request,'useful.html')
 def download_kwd(request):
     file = open('static/商务通文件模板.xls', 'rb')
     the_file_name = file + '.xlsx'

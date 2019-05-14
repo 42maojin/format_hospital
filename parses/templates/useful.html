@@ -1,29 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load staticfiles %}
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="shortcut icon" href="{% static 'images/pict.png' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>使用说明</title>
 </head>
+
 <body>
-    首页 ：
-	上传的文件列名要严格按照对应的格式，顺序要和模板的一致，可在首页右上角对文件模板进行下载
-	文件名不可更改，文件导出来的时候文件名是什么就是什么，不要更改
-例如
-消费表文件名 格式 ：
-PKT历史记录报表 2019年4月26日0时0分---2019年4月29日0时0分.xls
-商务通表文件 格式 ：
-账号名 + _  + 关键字 + _ + 日期
-szydgc_关键词_2019-04-29.csv
-	·选择日期
-		2019-01-01 – 2019-01-01   这样是查询1号当天的
-		2019-01-01 – 2019-01-02   这样是查询1号和2号的，以此类推
-	只有点击查询周期后，等待(几秒)查询结果出现在页面下方时，方可点击下载按钮进行下载
-文件管理 ：
-	删除给文件名，即删除了该文件包含的数据，查询结果将不包含该文件数据
+    <h1 style="text-align: center">文件夹工厂使用说明</h1>
+    <div style="width:770px;margin:0 auto">
+        <p class="MsoNormal"><b><span style="font-size:12.0pt;mso-bidi-font-size:11.0pt">首页 ：<span
+                        lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></span></span></b></p>
+        <p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>上传的文件列名要严格按照对应的格式，顺序要和模板的一致，可在<b>首页右上角对文件模板进行下载，若是出现请求接口错误，检查文件名中的账号名是否在添加账号页面当中<span lang="EN-US">
+                    <o:p></o:p>
+                </span></b></p>
+        <p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>文件名不可更改，<b><span
+                    style="color:red">文件导出来的时候文件名是什么就是什么，不要更改</span></b></p>
+        <p class="MsoNormal" style="margin-left:21.0pt;text-indent:21.0pt">例如</p>
+        <p class="MsoNormal" style="margin-left:21.0pt;text-indent:21.0pt">消费表文件名 格式 ：</p>
+        <p class="MsoNormal" style="margin-left:42.0pt"><span lang="EN-US">PKT</span>历史记录报表<span lang="EN-US">
+                2019</span>年<span lang="EN-US">4</span>月<span lang="EN-US">26</span>日<span lang="EN-US">0</span>时<span
+                lang="EN-US">0</span>分<span lang="EN-US">---2019</span>年<span lang="EN-US">4</span>月<span
+                lang="EN-US">29</span>日<span lang="EN-US">0</span>时<span lang="EN-US">0</span>分<span
+                lang="EN-US">.xls</span></p>
+        <p class="MsoNormal" style="margin-left:42.0pt">商务通表文件 格式 ：</p>
+        <p class="MsoNormal" style="margin-left:42.0pt">账号名<span lang="EN-US"> _&nbsp; </span>关键字<span lang="EN-US"> _
+            </span>日期</p>
+        <p class="MsoNormal" style="margin-left:42.0pt"><span lang="EN-US">szydgc_</span>关键词<span
+                lang="EN-US">_2019-04-29.csv</span></p>
+        <p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>·选择日期</p>
+        <p class="MsoNormal"><span
+                lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2019-01-01
+                – 2019-01-01&nbsp;&nbsp; </span>这样是查询<span lang="EN-US">1</span>号当天的</p>
+        <p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                2019-01-01 – 2019-01-02&nbsp;&nbsp; </span>这样是查询<span lang="EN-US">1</span>号和<span
+                lang="EN-US">2</span>号的，以此类推</p>
+        <p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>只有点击查询周期后，等待<span
+                lang="EN-US">(</span>几秒<span lang="EN-US">)</span><b><span
+                    style="color:red">查询结果出现在页面下方时，方可点击下载按钮进行下载</span></b></p>
+        <p class="MsoNormal"><b><span style="font-size:12.0pt;mso-bidi-font-size:11.0pt">文件管理 ：<span lang="EN-US">
+                        <o:p></o:p>
+                    </span></span></b></p>
+        <p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>删除给文件名，即删除了该文件包含的数据，查询结果将不包含该文件数据<a name="_GoBack"></a></p>
+        <p class="MsoNormal"><span lang="EN-US">&nbsp;</span></p>
+        <p class="MsoNormal"><b><span style="font-size:11.0pt">添加账号 ：<span lang="EN-US">
+                        <o:p></o:p>
+                    </span></span></b></p>
+        <p>
 
-添加账号 ：
-	肛肠和胃肠账号要分别添加，添加错误可进行删除，注意，账号名一定不能写错，否则不能上传该账号对应的文件
-
-
+        </p>
+        <p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>肛肠和胃肠账号要分别添加，添加错误可进行删除，注意，<b><span style="color:red">账号名一定不能写错，否则不能上传该账号对应的文件<span lang="EN-US">
+                        <o:p></o:p>
+                    </span></span></b></p>
+    </div>
 </body>
+
 </html>

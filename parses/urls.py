@@ -15,6 +15,7 @@ urlpatterns = [
     path('download_consum/',views.download_consum,name="download_consum"),
     path('manages/',views.manages,name="manages"),
     path('add_account/',views.add_account,name="add_account"),
+    path('useful/',views.useful,name="useful"),
     re_path('^del_account_gc/(?P<id>[0-9]*)/$',views.del_account_gc,name="del_account_gc"),
     re_path('^del_account_wc/(?P<id>[0-9]*)/$',views.del_account_wc,name="del_account_wc"),
 

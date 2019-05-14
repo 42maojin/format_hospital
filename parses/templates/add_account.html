@@ -33,6 +33,7 @@
             <thead>
                 <tr>
                     <th style="text-align:center">ID</th>
+                    <th style="text-align:center">账户ID</th>
                     <th style="text-align:center">文件名</th>
                     <th style="text-align:center">删除账号</th>
                 </tr>
@@ -43,6 +44,7 @@
 
                 <tr style="text-align:center">
                     <td>{{ foo.id }}</td>
+                    <td>{{ foo.account_id }}</td>
                     <td>{{ foo.account_name }}</td>
                     <td><a href="/parses/del_account_gc/{{ foo.id }}" class="layui-btn layui-btn-danger">
                       删除
@@ -60,7 +62,8 @@
             <form role="form" action="{% url 'add_account' %}" method="post">
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" id="ipt1" name="name1" class="form-control" placeholder="添加肛肠科账号">
+                        <input type="text" id="ipt1" name="gc_id" class="form-control" placeholder="添加肛肠科账号ID">
+                        <input type="text" id="ipt1" name="gc_account" class="form-control" placeholder="添加肛肠科账号">
                         <span class="input-group-btn">
                             <button class="btn btn-default" id="btn1" type="submit">
                                 确认添加 !
@@ -81,6 +84,7 @@
             <thead>
                 <tr>
                     <th style="text-align:center">ID</th>
+                    <th style="text-align:center">账户ID</th>
                     <th style="text-align:center">文件名</th>
                     <th style="text-align:center">删除账号</th>
                 </tr>
@@ -90,6 +94,7 @@
 
                 <tr style="text-align:center">
                     <td>{{ foo.id }}</td>
+                    <td>{{ foo.account_id }}</td>
                     <td>{{ foo.account_name }}</td>
                     <td><a href="/parses/del_account_wc/{{ foo.id }}" class="layui-btn layui-btn-danger">
                       删除
@@ -104,7 +109,8 @@
         <form role="form" action="{% url 'add_account' %}" method="post">
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" id="ipt2" name="name2" class="form-control" placeholder="添加胃肠科账号">
+                    <input type="text" id="ipt2" name="wc_id" class="form-control" placeholder="添加胃肠科账号ID">
+                    <input type="text" id="ipt2" name="wc_account" class="form-control" placeholder="添加胃肠科账号">
                     <span class="input-group-btn">
                         <button class="btn btn-default" id="btn2" type="submit">
                             确认添加 !

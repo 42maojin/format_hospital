@@ -133,7 +133,9 @@ class File_Name(models.Model):
 
 
 class ACCOUNT_GC(models.Model):
+    account_id=models.CharField(max_length=200)
     account_name= models.CharField(max_length=200)
 
 class ACCOUNT_WC(models.Model):
+    account_id = models.CharField(max_length=200)
     account_name= models.CharField(max_length=200)
